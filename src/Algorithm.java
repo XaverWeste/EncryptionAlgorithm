@@ -21,9 +21,10 @@ public class Algorithm {
             key[0]=Integer.parseInt(sa[0]);
             key[1]=Integer.parseInt(sa[1]);
             encryptAlphabet(key[0]);
-            h=next(key[1]);
             s=scanner.nextLine();
+            h=next(key[1]);
             System.out.println("encrypt: "+encrypt(s));
+            h=next(key[1]);
             System.out.println("decrypt: "+decrypt(s));
             i--;
         }
@@ -42,8 +43,8 @@ public class Algorithm {
         char[] c=s.toCharArray();
         StringBuilder sb=new StringBuilder();
         for(char value:c){
-            h=next(h);
             sb.append(encrypt(value,h));
+            h=next(h);
         }
         return sb.toString();
     }
@@ -52,8 +53,8 @@ public class Algorithm {
         char[] c=s.toCharArray();
         StringBuilder sb=new StringBuilder();
         for(char value:c){
-            h=next(h);
             sb.append(decrypt(value,h));
+            h=next(h);
         }
         return sb.toString();
     }
