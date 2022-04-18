@@ -6,6 +6,6 @@ public class MainController {
 
     public MainController(){
         Algorithm a=new Algorithm();
-        a.work(2);
+        a.work(3);
     }
 }

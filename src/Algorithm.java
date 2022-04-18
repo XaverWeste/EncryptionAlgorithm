@@ -7,7 +7,7 @@ public class Algorithm {
             'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z','a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z',' ','1','2','3','4','5','6','7','8','9','0','.',',',':','!','?','/','-','ü','ö','ä','ß',')','('
     };
     private char[] alphabet;
-    private int v;
+    int h=0;
 
     public Algorithm(){
 
@@ -15,13 +15,13 @@ public class Algorithm {
 
     public void work(int i){
         while(i>0){
-            v=0;
             Scanner scanner = new Scanner(System.in);
             String s=scanner.nextLine();
             String[] sa=s.split("/");
             key[0]=Integer.parseInt(sa[0]);
             key[1]=Integer.parseInt(sa[1]);
             encryptAlphabet(key[0]);
+            h=next(key[1]);
             s=scanner.nextLine();
             System.out.println("encrypt: "+encrypt(s));
             System.out.println("decrypt: "+decrypt(s));
@@ -41,33 +41,36 @@ public class Algorithm {
     private String encrypt(String s){
         char[] c=s.toCharArray();
         StringBuilder sb=new StringBuilder();
-        for(char value:c) sb.append(encrypt(value));
+        for(char value:c){
+            h=next(h);
+            sb.append(encrypt(value,h));
+        }
         return sb.toString();
     }
 
     private String decrypt(String s){
         char[] c=s.toCharArray();
-        v=key[1]*c.length;
         StringBuilder sb=new StringBuilder();
-        for(char value:c) sb.append(decrypt(value));
+        for(char value:c){
+            h=next(h);
+            sb.append(decrypt(value,h));
+        }
         return sb.toString();
     }
     
-    private char encrypt(char c){
+    private char encrypt(char c,int j){
         for(int i=0;i<alphabetOriginal.length;i++){
             if(alphabetOriginal[i]==c){
-                v+=key[1];
-                return alphabet[putInRange(i+v)];
+                return alphabet[putInRange(i+j)];
             }
         }
         return '§';
     }
 
-    private char decrypt(char c){
+    private char decrypt(char c,int j){
         for(int i=0;i<alphabet.length;i++){
             if(alphabet[i]==c){
-                v-=key[1];
-                return alphabetOriginal[putInRange(i+v)];
+                return alphabetOriginal[putInRange(i-j)];
             }
         }
         return '§';
@@ -79,7 +82,7 @@ public class Algorithm {
 
     private int putInRange(int i){
         if (i >= alphabetOriginal.length || i < 0) {
-            while (i > alphabetOriginal.length) {
+            while (i >= alphabetOriginal.length) {
                 i -= alphabetOriginal.length;
             }
             while (i < 0) {
