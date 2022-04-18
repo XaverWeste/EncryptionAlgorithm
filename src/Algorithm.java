@@ -2,19 +2,30 @@ import java.util.Scanner;
 
 public class Algorithm {
 
-    private final Scanner scanner=new Scanner(System.in);
-    private final int[] key =new int[2];
+    private int[] key=new int[2];
     private final char[] alphabetOriginal= new char[]{
             'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z','a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z',' ','1','2','3','4','5','6','7','8','9','0','.',',',':','!','?','/','-','ü','ö','ä','ß',')','('
     };
     private char[] alphabet;
+    private int v;
 
     public Algorithm(){
-        encryptAlphabet(4);
-        while(1==1){
+
+    }
+
+    public void work(int i){
+        while(i>0){
+            v=0;
+            Scanner scanner = new Scanner(System.in);
             String s=scanner.nextLine();
-            System.out.println(encrypt(s));
-            System.out.println(decrypt(encrypt(s)));
+            String[] sa=s.split("/");
+            key[0]=Integer.parseInt(sa[0]);
+            key[1]=Integer.parseInt(sa[1]);
+            encryptAlphabet(key[0]);
+            s=scanner.nextLine();
+            System.out.println("encrypt: "+encrypt(s));
+            System.out.println("decrypt: "+decrypt(s));
+            i--;
         }
     }
 
@@ -36,6 +47,7 @@ public class Algorithm {
 
     private String decrypt(String s){
         char[] c=s.toCharArray();
+        v=key[1]*c.length;
         StringBuilder sb=new StringBuilder();
         for(char value:c) sb.append(decrypt(value));
         return sb.toString();
@@ -43,14 +55,20 @@ public class Algorithm {
     
     private char encrypt(char c){
         for(int i=0;i<alphabetOriginal.length;i++){
-            if(alphabetOriginal[i]==c) return alphabet[i];
+            if(alphabetOriginal[i]==c){
+                v+=key[1];
+                return alphabet[putInRange(i+v)];
+            }
         }
         return '§';
     }
 
     private char decrypt(char c){
         for(int i=0;i<alphabet.length;i++){
-            if(alphabet[i]==c) return alphabetOriginal[i];
+            if(alphabet[i]==c){
+                v-=key[1];
+                return alphabetOriginal[putInRange(i+v)];
+            }
         }
         return '§';
     }
