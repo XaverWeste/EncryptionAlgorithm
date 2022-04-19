@@ -78,7 +78,7 @@ public class Algorithm {
     }
 
     private int next(int i){
-        return (41*i+23)%alphabet.length;
+        return (41*i+23)%alphabetOriginal.length;
     }
 
     private int putInRange(int i){
