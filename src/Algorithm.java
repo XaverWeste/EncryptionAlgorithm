@@ -2,22 +2,19 @@ import java.util.Scanner;
 
 public class Algorithm {
 
-    private int[] key=new int[2];
     private final char[] alphabetOriginal= new char[]{
             'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z','a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z',' ','1','2','3','4','5','6','7','8','9','0','.',',',':','!','?','/','-','ü','ö','ä','ß',')','('
     };
     private char[] alphabet;
     int h=0;
 
-    public Algorithm(){
-
-    }
-
-    public void work(int i){
+    public Algorithm(int i){
+        //TODO mehrfach verschlüsseln
         while(i>0){
             Scanner scanner = new Scanner(System.in);
             String s=scanner.nextLine();
             String[] sa=s.split("/");
+            int[] key = new int[2];
             key[0]=Integer.parseInt(sa[0]);
             key[1]=Integer.parseInt(sa[1]);
             encryptAlphabet(key[0]);

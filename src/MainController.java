@@ -5,7 +5,6 @@ public class MainController {
     }
 
     public MainController(){
-        Algorithm a=new Algorithm();
-        a.work(3);
+        Algorithm a=new Algorithm(4);
     }
 }
